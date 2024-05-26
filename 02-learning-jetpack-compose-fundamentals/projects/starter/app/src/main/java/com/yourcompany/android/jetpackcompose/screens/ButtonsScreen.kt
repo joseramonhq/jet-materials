@@ -34,43 +34,170 @@
 
 package com.yourcompany.android.jetpackcompose.screens
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccessAlarms
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconToggleButton
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.RadioButton
+import androidx.compose.material3.RadioButtonDefaults
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import com.yourcompany.android.jetpackcompose.R
 import com.yourcompany.android.jetpackcompose.router.BackButtonHandler
 import com.yourcompany.android.jetpackcompose.router.JetFundamentalsRouter
 import com.yourcompany.android.jetpackcompose.router.Screen
 
 @Composable
 fun ExploreButtonsScreen() {
-  Column(modifier = Modifier.fillMaxSize(),
-      horizontalAlignment = Alignment.CenterHorizontally,
-      verticalArrangement = Arrangement.Center) {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
 
-    MyButton()
-    MyRadioGroup()
-    MyFloatingActionButton()
+        MyButton()
+        MyRadioGroup()
+        MyFloatingActionButton()
+        MyOthersButtons()
 
-    BackButtonHandler {
-      JetFundamentalsRouter.navigateTo(Screen.Navigation)
+        BackButtonHandler {
+            JetFundamentalsRouter.navigateTo(Screen.Navigation)
+        }
     }
-  }
 }
 
 @Composable
 fun MyButton() {
-  //TODO add your code here
+    Button(
+        onClick = {},
+        colors = ButtonDefaults.buttonColors(
+            containerColor =
+            colorResource(id = R.color.colorPrimary)
+        ),
+        border = BorderStroke(
+            1.dp,
+            color = colorResource(id = R.color.colorPrimaryDark)
+        )
+    ) {
+        Text(
+            text = stringResource(id = R.string.button_text),
+            color = Color.White
+        )
+    }
 }
 
 @Composable
 fun MyRadioGroup() {
-  //TODO add your code here
+    val radioButtons = listOf(0, 1, 2, 3, 4)
+    val selectedButton = remember { mutableIntStateOf(radioButtons[0]) }
+
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        radioButtons.forEach { index ->
+            val isSelected = index == selectedButton.intValue
+            val colors = RadioButtonDefaults.colors(
+                selectedColor = colorResource(id = R.color.quantum_yellowA400),
+                unselectedColor = colorResource(id = R.color.quantum_vanillared600),
+                disabledUnselectedColor = Color.Blue
+            )
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center,
+                modifier = Modifier.padding(4.dp)
+            ) {
+                RadioButton(
+                    selected = isSelected,
+                    onClick = { selectedButton.intValue = index },
+                    colors = colors,
+                    enabled = index != 3
+                )
+                Text(
+                    text = "$index",
+                    modifier = Modifier.padding(start = 8.dp)
+                )
+            }
+        }
+    }
 }
+
 
 @Composable
 fun MyFloatingActionButton() {
-  //TODO add your code here
+    FloatingActionButton(
+        onClick = {},
+        containerColor = colorResource(id =
+        R.color.colorPrimary),
+        contentColor = Color.White,
+        content = {
+            Icon(
+                Icons.Filled.AccessAlarms, contentDescription = "Test FAB")
+        }
+    )
+}
+@Composable
+fun MyOthersButtons(){
+    Column(
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+
+    ) {
+        // IconButton
+        IconButton(onClick = { /* TODO: Handle IconButton click */ }) {
+            Icon(Icons.Filled.Favorite, contentDescription = "Favorite Icon")
+        }
+
+        // OutlinedButton
+        OutlinedButton(onClick = { /* TODO: Handle OutlinedButton click */ }) {
+            Text(text = "Outlined Button")
+        }
+
+        // IconToggleButton
+        var isChecked by remember { mutableStateOf(false) }
+        IconToggleButton(
+            checked = isChecked,
+            onCheckedChange = { isChecked = it }
+        ) {
+            val icon = if (isChecked) Icons.Filled.Check else Icons.Filled.Close
+            val tint = if (isChecked) Color.Green else Color.Red
+            Icon(icon, contentDescription = "Toggle Button", tint = tint)
+        }
+
+        // TextButton
+        TextButton(onClick = { /* TODO: Handle TextButton click */ }) {
+            Text(text = "Text Button")
+        }
+    }
 }

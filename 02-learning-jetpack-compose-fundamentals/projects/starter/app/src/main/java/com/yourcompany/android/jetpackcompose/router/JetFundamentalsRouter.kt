@@ -31,6 +31,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 package com.yourcompany.android.jetpackcompose.router
 
 import androidx.compose.runtime.MutableState
@@ -42,18 +43,51 @@ import androidx.compose.runtime.mutableStateOf
  * These objects should match files we have in the screens package
  */
 sealed class Screen {
-  object Navigation : Screen()
-  object Text : Screen()
-  object TextField : Screen()
-  object Buttons : Screen()
-  object ProgressIndicator : Screen()
-  object AlertDialog : Screen()
+
+    /*object Navigation: Esto define un objeto singleton llamado Navigation. En Kotlin, object se
+    utiliza para crear singletons, lo que significa que solo habrá una instancia de este objeto en
+    toda la aplicación.
+
+    :: Esto indica que Navigation es un subtipo de Screen.
+
+    Screen(): Aquí estamos llamando al constructor de la clase sellada Screen. Las clases selladas
+    en Kotlin son como enumeraciones avanzadas que pueden contener tanto datos como métodos. Cuando
+    llamamos al constructor de Screen, estamos creando una instancia de una de sus subclases. En
+    este caso, Navigation es una instancia de la subclase Screen.
+
+    Entonces, en resumen, la línea object Navigation : Screen() crea un objeto singleton llamado
+    Navigation, que es una instancia de la clase sellada Screen. Esto se utiliza para representar
+    una pantalla específica en la aplicación, en este caso, la pantalla de navegación.
+
+
+
+
+
+
+*/
+    object Navigation : Screen() // Define la pantalla de navegación
+    object Text : Screen() // Define la pantalla de texto
+    object TextField : Screen() // Define la pantalla de campo de texto
+    object Buttons : Screen() // Define la pantalla de botones
+    object ProgressIndicator : Screen() // Define la pantalla de indicador de progreso
+    object AlertDialog : Screen() // Define la pantalla de diálogo de alerta
+    object NavigationDialogs : Screen() // Define la pantalla de navegación de diálogos
+    object Snackbar : Screen() // Define la pantalla de Snackbar
+    object BottomSheetDialogs : Screen() // Define la pantalla de BottomSheet
 }
 
+/** Router object used to navigate between screens. */
 object JetFundamentalsRouter {
-  var currentScreen: MutableState<Screen> = mutableStateOf(Screen.Navigation)
+    // MutableState para mantener el estado de la pantalla actual
+    var currentScreen: MutableState<Screen> = mutableStateOf(Screen.Navigation)
 
-  fun navigateTo(destination: Screen) {
-    currentScreen.value = destination
-  }
+    /**
+     * Function to navigate to a specific screen.
+     *
+     * @param destination La pantalla a la que se desea navegar
+     */
+    fun navigateTo(destination: Screen) {
+        // Actualiza el valor de currentScreen para mostrar la pantalla deseada
+        currentScreen.value = destination
+    }
 }

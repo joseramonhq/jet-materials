@@ -34,9 +34,10 @@
 
 package com.yourcompany.android.jetpackcompose.app
 
+import BottomSheetDialogScreen
 import androidx.compose.animation.Crossfade
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import com.yourcompany.android.jetpackcompose.router.JetFundamentalsRouter
 import com.yourcompany.android.jetpackcompose.router.Screen
@@ -44,7 +45,7 @@ import com.yourcompany.android.jetpackcompose.screens.*
 
 @Composable
 fun JetFundamentalsApp() {
-  Surface(color = MaterialTheme.colors.background) {
+  Surface(color = MaterialTheme.colorScheme.background) {
     Crossfade(targetState = JetFundamentalsRouter.currentScreen) { screenState ->
       when (screenState.value) {
         is Screen.Navigation -> NavigationScreen()
@@ -52,7 +53,10 @@ fun JetFundamentalsApp() {
         is Screen.TextField -> TextFieldScreen()
         is Screen.Buttons -> ExploreButtonsScreen()
         is Screen.ProgressIndicator -> ProgressIndicatorScreen()
+        is Screen.NavigationDialogs -> NavigationDialogsScreen()
         is Screen.AlertDialog -> AlertDialogScreen()
+        is Screen.Snackbar -> SnackbarScreen()
+        is Screen.BottomSheetDialogs -> BottomSheetDialogScreen()
       }
     }
   }

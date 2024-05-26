@@ -1,3 +1,7 @@
+package com.yourcompany.android.jetpackcompose.screens
+
+
+
 /*
  * Copyright (c) 2022 Kodeco Inc
  *
@@ -32,17 +36,21 @@
  * THE SOFTWARE.
  */
 
-package com.yourcompany.android.jetpackcompose.screens
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.LinearProgressIndicator
+
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.yourcompany.android.jetpackcompose.R
 import com.yourcompany.android.jetpackcompose.router.BackButtonHandler
@@ -50,27 +58,44 @@ import com.yourcompany.android.jetpackcompose.router.JetFundamentalsRouter
 import com.yourcompany.android.jetpackcompose.router.Screen
 
 @Composable
-fun ProgressIndicatorScreen() {
+fun NavigationDialogsScreen() {
+    Surface(
+        color = Color.White,
+        modifier = Modifier.fillMaxSize()
+    ) {
+        Column(
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
 
-  Column(
-      modifier = Modifier.fillMaxSize(),
-      horizontalAlignment = Alignment.CenterHorizontally,
-      verticalArrangement = Arrangement.Center
-  ) {
-      Column(
-          modifier = Modifier.fillMaxSize(),
-          horizontalAlignment = Alignment.CenterHorizontally,
-          verticalArrangement = Arrangement.Center
-      ) {
-          CircularProgressIndicator(
-              color = colorResource(id = R.color.quantum_vanillared600),
-              strokeWidth = 4.dp
-          )
-          LinearProgressIndicator(progress = { 0.6f })
-      }
-  }
+            NavigationButton(stringResource(id = R.string.alert_dialog), Screen.AlertDialog)
+            NavigationButton(stringResource(id = R.string.snackbar), Screen.Snackbar)
+            NavigationButton(stringResource(id = R.string.bottom_sheet), Screen.BottomSheetDialogs)
 
-  BackButtonHandler {
-    JetFundamentalsRouter.navigateTo(Screen.Navigation)
-  }
+
+        }
+    }
+    BackButtonHandler {
+        JetFundamentalsRouter.navigateTo(Screen.Navigation)
+    }
+}
+
+@Composable
+fun NavigationButton(text: String, screen: Screen) {
+    Button(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(start = 16.dp, end = 16.dp, top = 16.dp),
+        shape = RoundedCornerShape(4.dp),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = colorResource(id = R.color.quantum_vanillablue800),
+            contentColor = Color.White // Cambiar el color del texto del botón si es necesario
+        ),
+        onClick = { JetFundamentalsRouter.navigateTo(screen) }
+    ) {
+        Text(
+            text = text,
+            color = Color.White
+        )
+    }
 }

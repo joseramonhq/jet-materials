@@ -36,10 +36,10 @@ package com.yourcompany.android.jetpackcompose.screens
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -62,23 +62,23 @@ fun NavigationScreen() {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-      NavigationButton(stringResource(id = R.string.text), Screen.Text)
-      NavigationButton(stringResource(id = R.string.text_field), Screen.TextField)
-      NavigationButton(stringResource(id = R.string.buttons), Screen.Buttons)
-      NavigationButton(stringResource(id = R.string.progress_indicators), Screen.ProgressIndicator)
-      NavigationButton(stringResource(id = R.string.alert_dialog), Screen.AlertDialog)
+      NavigationButtons(stringResource(id = R.string.text), Screen.Text)
+      NavigationButtons(stringResource(id = R.string.text_field), Screen.TextField)
+      NavigationButtons(stringResource(id = R.string.buttons), Screen.Buttons)
+      NavigationButtons(stringResource(id = R.string.progress_indicators), Screen.ProgressIndicator)
+      NavigationButtons(stringResource(id = R.string.Pop_ups), Screen.NavigationDialogs)
     }
   }
 }
 
 @Composable
-fun NavigationButton(text: String, screen: Screen) {
+fun NavigationButtons(text: String, screen: Screen) {
   Button(
       modifier = Modifier
           .fillMaxWidth()
           .padding(start = 16.dp, end = 16.dp, top = 16.dp),
       shape = RoundedCornerShape(4.dp),
-      colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.colorPrimary)),
+      colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.colorPrimary)),
       onClick = { JetFundamentalsRouter.navigateTo(screen) }
   ) {
     Text(
